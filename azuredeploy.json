@@ -579,7 +579,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://hsirtldocs.blob.core.windows.net/scripts/setup_appsvr.sh"
+            "https://raw.githubusercontent.com/hsirtl/sap-2-tier-on-oracle-linux/master/setup_appsvr.sh"
           ],
           "commandToExecute": "sh setup_appsvr.sh"
         }
@@ -600,7 +600,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://hsirtldocs.blob.core.windows.net/scripts/setup_dbsvr.sh"
+            "https://raw.githubusercontent.com/hsirtl/sap-2-tier-on-oracle-linux/master/setup_dbsvr.sh"
           ],
           "commandToExecute": "sh setup_dbsvr.sh"
         }
