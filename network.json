@@ -1,0 +1,52 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetName": {
+      "defaultValue": "IT-DevTest-Vnet",
+      "type": "string"
+    }
+  },
+  "variables": {
+    "vnetAddressSpace": "10.26.1.0/24",
+    "appSubnetName": "SAPPoc-App",
+    "appSubnetAddressSpace": "10.26.1.32/28",
+    "SAPPoc-DB-Subnet-Name": "SAPPoc-DB",
+    "SAPPoc-DB-Subnet-Prefix": "10.26.1.48/28"
+  },
+  "resources": [
+    {
+      "name": "[parameters('vnetName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "IT-DevTest01-Vnet01"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vnetAddressSpace')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('appSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('appSubnetAddressSpace')]"
+            }
+          },
+          {
+            "name": "[variables('SAPPoc-DB-Subnet-Name')]",
+            "properties": {
+              "addressPrefix": "[variables('SAPPoc-DB-Subnet-Prefix')]"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

@@ -1,0 +1,629 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "defaultValue": "maintadm",
+      "type": "string"
+    },
+    "adminPassword": {
+      "defaultValue": "demo@pass123",
+      "type": "string"
+    },
+    "vnetName": {
+      "defaultValue": "IT-DevTest-Vnet",
+      "type": "string"
+    },
+    "appVmName": {
+      "defaultValue": "app-azr-d2v-01",
+      "type": "string"
+    },
+    "appVmSize": {
+      "defaultValue": "Standard_DS2_v2",
+      "type": "string"
+    },
+    "appVmSubnetName": {
+      "defaultValue": "SAPPoc-App",
+      "type": "string"
+    },
+    "dbVmName": {
+      "defaultValue": "dbm-azr-d2v",
+      "type": "string"
+    },
+    "dbVmSize": {
+      "defaultValue": "Standard_DS2_v2",
+      "type": "string"
+    },
+    "dbVmSubnetName": {
+      "defaultValue": "SAPPoc-DB",
+      "type": "string"
+    }
+  },
+  "variables": {
+    "vnetID": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+    // storage account for diagnostics data
+    "diagnosticsStore": "[concat(uniqueString(resourceGroup().id),'storage')]",
+    // APP SERVER config
+    // disks
+    "disks_app_azr_d2v_01_OsDisk_1_name": "app-azr-d2v-01_OsDisk_1",
+    "disks_usrsap_D2V_name": "usrsap_D2V",
+    "disks_worktransfer_D2V_name": "worktransfer_D2V",
+    "disks_sapmnt_D2V_name": "sapmnt_D2V",
+    // network
+    "appVmNicName": "app-azr-d2v-01700",
+    "appVmSubnet": "[concat(variables('vnetID'), '/subnets/', parameters('appVmSubnetName'))]",
+    // DB SERVER config
+    // disks
+    "disks_dbm_azr_d2v_OsDisk_1_name": "dbm-azr-d2v_OsDisk_1",
+    "disks_arch_D2V_name": "arch_D2V",
+    "disks_data_D2V_name": "data_D2V",
+    "disks_log_D2V_name": "log_D2V",
+    "disks_sapcd_D2V_name": "sapcd_D2V",
+    "disks_oracle_D2V_name": "oracle_D2V",
+    // network
+    "dbVmNicName": "dbm-azr-d2v272",
+    "dbVmSubnet": "[concat(variables('vnetID'), '/subnets/', parameters('dbVmSubnetName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_arch_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 128
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_data_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 2048
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_log_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 32
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_oracle_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 64
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_sapcd_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 2048
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_sapmnt_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 32
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_usrsap_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 32
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "name": "[variables('disks_worktransfer_D2V_name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "accountType": "Premium_LRS",
+        "creationData": {
+          "createOption": "Empty"
+        },
+        "diskSizeGB": 32
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('appVmName')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('appVmSize')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Oracle",
+            "offer": "Oracle-Linux",
+            "sku": "7.2",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Linux",
+            "name": "[concat(parameters('appVmName'),'_OsDisk_1_3174fd00ff3f474080e2153038cc7697')]",
+            "createOption": "FromImage",
+            "caching": "ReadWrite",
+            "managedDisk": {
+              "storageAccountType": "Premium_LRS"
+            },
+            "diskSizeGB": 30
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "name": "usrsap_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_usrsap_D2V_name'))]"
+              }
+            },
+            {
+              "lun": 1,
+              "name": "worktransfer_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_worktransfer_D2V_name'))]"
+              }
+            },
+            {
+              "lun": 2,
+              "name": "sapmnt_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_sapmnt_D2V_name'))]"
+              }
+            }
+          ]
+        },
+        "osProfile": {
+          "computerName": "[parameters('appVmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": false
+          },
+          "secrets": []
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('appVmNicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[concat('https', '://', variables('diagnosticsStore'), '.blob.core.windows.net', '/')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/disks', variables('disks_usrsap_D2V_name'))]",
+        "[resourceId('Microsoft.Compute/disks', variables('disks_worktransfer_D2V_name'))]",
+        "[resourceId('Microsoft.Compute/disks', variables('disks_sapmnt_D2V_name'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('appVmNicName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('diagnosticsStore'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('dbVmName')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('dbVmSize')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Oracle",
+            "offer": "Oracle-Linux",
+            "sku": "7.2",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Linux",
+            "name": "[concat(parameters('dbVmName'),'_OsDisk_1_a6ce56daba854ce896ccabc1b2fba4ac')]",
+            "createOption": "FromImage",
+            "caching": "ReadWrite",
+            "managedDisk": {
+              "storageAccountType": "Premium_LRS"
+            },
+            "diskSizeGB": 30
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "name": "data_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS",
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_data_D2V_name'))]"
+              },
+              "diskSizeGB": 2048
+            },
+            {
+              "lun": 1,
+              "name": "log_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS",
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_log_D2V_name'))]"
+              },
+              "diskSizeGB": 32
+            },
+            {
+              "lun": 2,
+              "name": "arch_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS",
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_arch_D2V_name'))]"
+              },
+              "diskSizeGB": 128
+            },
+            {
+              "lun": 3,
+              "name": "oracle_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS",
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_oracle_D2V_name'))]"
+              },
+              "diskSizeGB": 64
+            },
+            {
+              "lun": 4,
+              "name": "sapcd_D2V",
+              "createOption": "Attach",
+              "caching": "ReadOnly",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS",
+                "id": "[resourceId('Microsoft.Compute/disks', variables('disks_sapcd_D2V_name'))]"
+              },
+              "diskSizeGB": 2048
+            }
+          ]
+        },
+        "osProfile": {
+          "computerName": "[parameters('dbVmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": false
+          },
+          "secrets": []
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('dbVmNicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[concat('https', '://', variables('diagnosticsStore'), '.blob.core.windows.net', '/')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/disks', variables('disks_data_D2V_name'))]",
+        "[resourceId('Microsoft.Compute/disks', variables('disks_log_D2V_name'))]",
+        "[resourceId('Microsoft.Compute/disks', variables('disks_arch_D2V_name'))]",
+        "[resourceId('Microsoft.Compute/disks', variables('disks_oracle_D2V_name'))]",
+        "[resourceId('Microsoft.Compute/disks', variables('disks_sapcd_D2V_name'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('dbVmNicName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('diagnosticsStore'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('appVmNicName')]",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "provisioningState": "Succeeded",
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.26.1.39",
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('appVmSubnet')]"
+              },
+              "primary": true,
+              "privateIPAddressVersion": "IPv4"
+            }
+          },
+          {
+            "name": "ascsd2v",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.26.1.40",
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('appVmSubnet')]"
+              },
+              "primary": false,
+              "privateIPAddressVersion": "IPv4"
+            }
+          },
+          {
+            "name": "cid2v",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.26.1.41",
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('appVmSubnet')]"
+              },
+              "primary": false,
+              "privateIPAddressVersion": "IPv4"
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": [],
+          "appliedDnsServers": []
+        },
+        "enableAcceleratedNetworking": false,
+        "enableIPForwarding": false,
+        "primary": true,
+        "virtualMachine": {
+          "id": "[resourceId('Microsoft.Compute/virtualMachines', parameters('appVmName'))]"
+        }
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('dbVmNicName')]",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {
+        "provisioningState": "Succeeded",
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.26.1.52",
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('dbVmSubnet')]"
+              },
+              "primary": true,
+              "privateIPAddressVersion": "IPv4"
+            }
+          },
+          {
+            "name": "dbd2v-se",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.26.1.53",
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('dbVmSubnet')]"
+              },
+              "primary": false,
+              "privateIPAddressVersion": "IPv4"
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": [],
+          "appliedDnsServers": [],
+          "internalDomainNameSuffix": "il0wg1prqepenevdobnh4cq5pd.ax.internal.cloudapp.net"
+        },
+        "macAddress": "00-0D-3A-26-89-16",
+        "enableAcceleratedNetworking": false,
+        "enableIPForwarding": false,
+        "primary": true,
+        "virtualMachine": {
+          "id": "[resourceId('Microsoft.Compute/virtualMachines', parameters('dbVmName'))]"
+        }
+      },
+      "dependsOn": []
+    },
+    {
+      "name": "[concat(parameters('appVmName'),'/setupappsvrscript')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('appVmName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://hsirtldocs.blob.core.windows.net/scripts/setup_appsvr.sh"
+          ],
+          "commandToExecute": "sh setup_appsvr.sh"
+        }
+      }
+    },
+    {
+      "name": "[concat(parameters('dbVmName'),'/setupdbsvrscript')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('dbVmName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://hsirtldocs.blob.core.windows.net/scripts/setup_dbsvr.sh"
+          ],
+          "commandToExecute": "sh setup_dbsvr.sh"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "Storage",
+      "name": "[variables('diagnosticsStore')]",
+      "apiVersion": "2016-01-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Description": "enter Description here",
+        "ManagedDepartment": "enter department name here",
+        "Owner": "enter your email here"
+      },
+      "scale": null,
+      "properties": {},
+      "dependsOn": []
+    }
+  ]
+}
