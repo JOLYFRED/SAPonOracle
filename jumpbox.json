@@ -4,31 +4,57 @@
   "parameters": {
     "vmName": {
       "defaultValue": "jumpbox",
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Internal name of the Virtual Machine (won't be visible to the outside world)."
+      }
     },
     "adminUsername": {
-      "defaultValue": "maintadm",
-      "type": "string"
+      "defaultValue": "demouser",
+      "type": "string",
+      "metadata": {
+        "description": "User name for the Virtual Machines (default: demouser)."
+      }
     },
     "adminPassword": {
       "defaultValue": "demo@pass123",
-      "type": "string"
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machines (default: demo@pass123)."
+      }
     },
     "vmSize": {
       "defaultValue": "Standard_DS1_v2",
-      "type": "string"
+      "type": "string",
+      "allowedValues": [
+        "Standard_DS1_v2",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2"
+      ],
+      "metadata": {
+        "description": "The VM size of the jumpbox machine. Note that some VM sizes in the list are only available in some particular locations. Please check the availability and the price of the VM sizes at https://azure.microsoft.com/en-us/pricing/details/virtual-machines before deployment."
+      }
     },
     "vmDnsPrefix": {
       "defaultValue": "saponoracle72jumpbox",
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The Prefix of the DNS name this VM can be connected by. Remainder of the DNS name depends on the Resource Group location (e.g. XXX.northeurope.cloudapp.azure.com)."
+      }
     },
     "vnetName": {
       "defaultValue": "IT-DevTest-Vnet",
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The Virtual Network this VM will be deployed to."
+      }
     },
     "subnetName": {
       "defaultValue": "SAPPoc-DB",
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The subnet this VM will be deployed to."
+      }
     }
   },
   "variables": {

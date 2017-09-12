@@ -4,7 +4,10 @@
   "parameters": {
     "vnetName": {
       "defaultValue": "IT-DevTest-Vnet",
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Virtual Network the VMs will be deployed to later. You'll need to provide this name when deploying the jumpbox VM and/or the SAP VMs."
+      }
     }
   },
   "variables": {

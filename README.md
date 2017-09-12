@@ -10,6 +10,14 @@
 This creates a Virtual Network with two subnets. The Virtual Machines to be provisioned in
 following steps will be installed into these subnets.
 
+The Virtual Network will be installed with following configuration:
+
+Parameter | Name | Address Space
+--------- | ------- | -------------
+VNet | IT-DevTest-Vnet | 10.26.1.0/24
+App Server Subnet | SAPPoc-APP | 10.26.1.32/28
+DB Server Subnet | SAPPoc-DB | 10.26.1.48/28
+
 ### Step 2 (optional): Create a jumpbox VM on the Azure Portal
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhsirtl%2Fsap-2-tier-on-oracle-linux%2Fmaster%2Fjumpbox.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
