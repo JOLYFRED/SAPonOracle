@@ -3,12 +3,18 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "adminUsername": {
-      "defaultValue": "maintadm",
-      "type": "string"
+      "defaultValue": "demouser",
+      "type": "string",
+      "metadata": {
+        "description": "User name for the Virtual Machines."
+      }
     },
     "adminPassword": {
       "defaultValue": "demo@pass123",
-      "type": "string"
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
     },
     "vnetName": {
       "defaultValue": "IT-DevTest-Vnet",
