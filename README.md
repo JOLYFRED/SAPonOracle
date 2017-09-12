@@ -36,4 +36,4 @@ This creates two Oracle-Linux 7.2 based Virtual Machines: one application server
 machine, one database server. These VMs can be used to install SAP Netweaver.
 The deployment script not only provisions the machines but also does some initial setup.
 
-**Beware:** due to some issues with newest kernels, the script does NOT execute a `sudo yum update`!
+**Beware:** due to some issues with newest kernels, the script excludes the kernel while updating the system via `sudo yum update`!

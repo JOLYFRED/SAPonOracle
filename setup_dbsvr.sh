@@ -53,8 +53,8 @@ change_config()
 }
 
 # Before doing anything, update the system
-# yum  -y update --exclude=WALinuxAgent
-# echo "System updated."
+yum -y update --exclude=WALinuxAgent --exclude=kernel*
+echo "System updated."
 
 yum -y install lsscsi
 echo "lsscsi installed."
@@ -123,3 +123,5 @@ chkconfig nfs on
 chkconfig nfslock on
 systemctl start nfs-server
 systemctl enable nfs-server
+
+echo "Initial setup complete."
