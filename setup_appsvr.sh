@@ -132,4 +132,5 @@ chkconfig nfslock on
 systemctl start nfs-server
 systemctl enable nfs-server
 
+cat /etc/oracle-release
 echo "Initial setup complete."
