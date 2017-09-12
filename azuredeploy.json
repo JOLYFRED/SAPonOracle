@@ -26,7 +26,15 @@
     },
     "appVmSize": {
       "defaultValue": "Standard_DS2_v2",
-      "type": "string"
+      "type": "string",
+      "allowedValues": [
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2"
+      ],
+      "metadata": {
+        "description": "The VM size of the application server. Note that some VM sizes in the list are only available in some particular locations. Please check the availability and the price of the VM sizes at https://azure.microsoft.com/en-us/pricing/details/virtual-machines before deployment."
+      }
     },
     "appVmSubnetName": {
       "defaultValue": "SAPPoc-App",
@@ -38,7 +46,14 @@
     },
     "dbVmSize": {
       "defaultValue": "Standard_DS2_v2",
-      "type": "string"
+      "type": "string",
+      "allowedValues": [
+        "Standard_DS3_v2",
+        "Standard_DS4_v2"
+      ],
+      "metadata": {
+        "description": "The VM size of the application server. Note that some VM sizes in the list are only available in some particular locations. Please check the availability and the price of the VM sizes at https://azure.microsoft.com/en-us/pricing/details/virtual-machines before deployment."
+      }
     },
     "dbVmSubnetName": {
       "defaultValue": "SAPPoc-DB",
