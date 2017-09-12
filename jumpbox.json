@@ -39,7 +39,7 @@
       "defaultValue": "saponoracle72jumpbox",
       "type": "string",
       "metadata": {
-        "description": "The Prefix of the DNS name this VM can be connected by. Remainder of the DNS name depends on the Resource Group location (e.g. XXX.northeurope.cloudapp.azure.com)."
+        "description": "The Prefix of the DNS name this VM can be connected by. Remainder of the DNS name depends on the Resource Group location (e.g. XXX.northeurope.cloudapp.azure.com). The whole DNS name must be globally unique."
       }
     },
     "vnetName": {
@@ -60,9 +60,9 @@
   "variables": {
     "vnetID": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
     "vmSubnet": "[concat(variables('vnetID'), '/subnets/', parameters('subnetName'))]",
-    "nicName": "[concat(parameters('vmSize'), '-nic')]",
-    "pipName": "[concat(parameters('vmSize'), '-pip')]",
-    "nsgName": "[concat(parameters('vmSize'), '-nsg')]"
+    "nicName": "[concat(parameters('vmName'), '-nic')]",
+    "pipName": "[concat(parameters('vmName'), '-pip')]",
+    "nsgName": "[concat(parameters('vmName'), '-nsg')]"
   },
   "resources": [
     {
@@ -84,7 +84,7 @@
           },
           "osDisk": {
             "osType": "Windows",
-            "name": "[concat(parameters('vmName'),'_OsDisk_1_c43404050a664acb8868ccfc543b9689')]",
+            "name": "[concat(parameters('vmName'),'-OsDisk')]",
             "createOption": "FromImage",
             "caching": "ReadWrite",
             "managedDisk": {
