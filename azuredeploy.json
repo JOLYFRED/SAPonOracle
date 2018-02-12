@@ -264,7 +264,7 @@
           "imageReference": {
             "publisher": "Oracle",
             "offer": "Oracle-Linux",
-            "sku": "7.2",
+            "sku": "7.4",
             "version": "latest"
           },
           "osDisk": {
@@ -357,7 +357,7 @@
           "imageReference": {
             "publisher": "Oracle",
             "offer": "Oracle-Linux",
-            "sku": "7.2",
+            "sku": "7.4",
             "version": "latest"
           },
           "osDisk": {
