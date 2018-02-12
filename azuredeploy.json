@@ -263,7 +263,7 @@
         "storageProfile": {
           "imageReference": {
             "publisher": "Oracle",
-            "offer": "Oracle-Linux",
+            "offer": "Oracle Linux",
             "sku": "7.4",
             "version": "latest"
           },
@@ -356,7 +356,7 @@
         "storageProfile": {
           "imageReference": {
             "publisher": "Oracle",
-            "offer": "Oracle-Linux",
+            "offer": "Oracle Linux",
             "sku": "7.4",
             "version": "latest"
           },
