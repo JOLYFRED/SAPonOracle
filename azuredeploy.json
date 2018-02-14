@@ -58,7 +58,61 @@
       "defaultValue": "SAPPoc-DB",
       "type": "string"
     }
-  },
+	"IPAllocationMethod": {
+      "type": "string",
+      "allowedValues" : [
+       "Dynamic",
+       "Static"
+      ],
+      "metadata": {
+                "description": "IP Allocation Method"
+      },
+          "defaultValue": "Dynamic"
+    },
+    "IPPublic": {
+            "type": "string",
+            "allowedValues" : [
+              "yes",
+              "no"
+            ],
+            "metadata": {
+                "description": "Choose whether to acquire a public IP"
+          },
+          "defaultValue": "yes"
+          },
+		          "IPAllocationMethod": {
+
+            "type": "string",
+
+            "allowedValues" : [
+
+              "Dynamic",
+
+              "Static"
+
+            ],
+
+            "metadata": {
+
+                "description": "IP Allocation Method"
+
+          },
+
+          "defaultValue": "Dynamic"
+
+        },
+        "IPPublic": {
+            "type": "string",
+            "allowedValues" : [
+              "yes",
+              "no"
+            ],
+            "metadata": {
+                "description": "Choose whether to acquire a public IP"
+          },
+          "defaultValue": "yes"
+        },
+    },
   "variables": {
     "vnetID": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
     // storage account for diagnostics data
@@ -260,6 +314,15 @@
         "hardwareProfile": {
           "vmSize": "[parameters('appVmSize')]"
         },
+		 "IPAllocationMethod":{
+           "value": "[parameters('IPAllocationMethod')]"
+         },
+		 "IPPublic":{
+           "value": "[parameters('IPPublic')]"
+         },
+		 "StaticIP":{
+           "value": "[parameters('StaticIP')]"
+         },
         "storageProfile": {
           "imageReference": {
             "publisher": "Oracle",
@@ -444,6 +507,15 @@
             }
           ]
         },
+		"IPAllocationMethod":{
+          "value": "[parameters('IPAllocationMethod')]"
+        },
+		"IPPublic":{
+          "value": "[parameters('IPPublic')]"
+        },
+		"StaticIP":{
+          "value": "[parameters('StaticIP')]"
+        }
         "diagnosticsProfile": {
           "bootDiagnostics": {
             "enabled": true,
@@ -599,7 +671,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/hsirtl/sap-2-tier-on-oracle-linux/master/setup_appsvr.sh"
+            "https://github.com/JOLYFRED/SAPonOracle/setup_appsvr.sh"
           ],
           "commandToExecute": "sh setup_appsvr.sh"
         }
@@ -620,7 +692,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/hsirtl/sap-2-tier-on-oracle-linux/master/setup_dbsvr.sh"
+            "https://github.com/JOLYFRED/SAPonOracle/setup_dbsvr.sh"
           ],
           "commandToExecute": "sh setup_dbsvr.sh"
         }
