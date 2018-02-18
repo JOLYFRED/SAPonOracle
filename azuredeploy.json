@@ -264,7 +264,7 @@
           "imageReference": {
             "publisher": "Oracle",
             "offer": "Oracle-Linux",
-            "sku": "7.2",
+            "sku": "7.4",
             "version": "latest"
           },
           "osDisk": {
@@ -357,7 +357,7 @@
           "imageReference": {
             "publisher": "Oracle",
             "offer": "Oracle-Linux",
-            "sku": "7.2",
+            "sku": "7.4",
             "version": "latest"
           },
           "osDisk": {
@@ -599,7 +599,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/hsirtl/sap-2-tier-on-oracle-linux/master/setup_appsvr.sh"
+            "https://github.com/JOLYFRED/SAPonOracle/master/setup_appsvr.sh"
           ],
           "commandToExecute": "sh setup_appsvr.sh"
         }
@@ -620,7 +620,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/hsirtl/sap-2-tier-on-oracle-linux/master/setup_dbsvr.sh"
+            "https://github.com/JOLYFRED/SAPonOracle/master/setup_dbsvr.sh"
           ],
           "commandToExecute": "sh setup_dbsvr.sh"
         }
