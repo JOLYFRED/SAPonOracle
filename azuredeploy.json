@@ -599,7 +599,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://github.com/JOLYFRED/SAPonOracle/master/setup_appsvr.sh"
+            "https://github.com/JOLYFRED/SAPonOracle/blob/master/setup_appsvr.sh"
           ],
           "commandToExecute": "sh setup_appsvr.sh"
         }
@@ -620,7 +620,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://github.com/JOLYFRED/SAPonOracle/master/setup_dbsvr.sh"
+            "https://github.com/JOLYFRED/SAPonOracle/blob/master/setup_dbsvr.sh"
           ],
           "commandToExecute": "sh setup_dbsvr.sh"
         }
