@@ -9,6 +9,17 @@
         "description": "The name of the Virtual Network the VMs will be deployed to later. You'll need to provide this name when deploying the jumpbox VM and/or the SAP VMs."
       }
     }
+	"IPPublic": {
+       "type": "string",
+       "allowedValues" : [
+        "yes",
+         "no"
+         ],
+        "metadata": {
+          "description": "Choose whether to acquire a public IP"
+        },
+          "defaultValue": "yes"
+        },
   },
   "variables": {
     "vnetAddressSpace": "10.26.1.0/24",
