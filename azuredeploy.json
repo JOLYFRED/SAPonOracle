@@ -54,6 +54,17 @@
         "description": "The VM size of the application server. Note that some VM sizes in the list are only available in some particular locations. Please check the availability and the price of the VM sizes at https://azure.microsoft.com/en-us/pricing/details/virtual-machines before deployment."
       }
     },
+	"IPPublic": {
+       "type": "string",
+      "allowedValues" : [
+            "yes",
+            "no"
+        ],
+        "metadata": {
+          "description": "Choose whether to acquire a public IP"
+          },
+      "defaultValue": "yes"
+    },
     "dbVmSubnetName": {
       "defaultValue": "SAPPoc-DB",
       "type": "string"
@@ -518,6 +529,9 @@
         "dnsSettings": {
           "dnsServers": [],
           "appliedDnsServers": []
+        },
+		 "StaticIP":{
+           "value": "[parameters('StaticIP')]"
         },
         "enableAcceleratedNetworking": false,
         "enableIPForwarding": false,
