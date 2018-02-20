@@ -19,7 +19,7 @@
           "description": "Choose whether to acquire a public IP"
         },
           "defaultValue": "yes"
-        },
+        }
   },
   "variables": {
     "vnetAddressSpace": "10.26.1.0/24",
