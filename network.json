@@ -17,8 +17,8 @@
          ],
         "metadata": {
           "description": "Choose whether to acquire a public IP"
-        },
-          "defaultValue": "yes"
+        }
+          "defaultValue": "yes",
         }
   },
   "variables": {
